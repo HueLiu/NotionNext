@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react'
  * @returns
  */
 const Slug = props => {
-  const { post } = props
+  const { post, allNavPages } = props
   const router = useRouter()
   const { locale } = useGlobal()
 
@@ -46,6 +46,15 @@ const Slug = props => {
     }
     return false
   }
+
+  // random加载
+  useEffect(() => {
+    if (router.asPath.includes('random') && allNavPages) {
+      const randomIndex = Math.floor(Math.random() * allNavPages.length)
+      const randomPost = allNavPages[randomIndex]
+      router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    }
+  }, [allNavPages])
 
   // 文章加载
   useEffect(() => {
